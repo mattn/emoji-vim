@@ -5,8 +5,8 @@ del /Q /S "master*" 2>&1 > NUL
 del /Q /S "*.png" 2>&1 > NUL
 del /Q /S "*.bmp" 2>&1 > NUL
 :download
-wget "https://github.com/arvida/emoji-cheat-sheet.com/archive/master.zip"
-unzip master
+curl -L -s "https://github.com/arvida/emoji-cheat-sheet.com/archive/master.zip" > master.zip
+unzip master.zip
 del /Q /S "master*" 2>&1 > NUL
 move emoji-cheat-sheet.com-master\public\graphics\emojis\*.png . 
 rd /Q /S emoji-cheat-sheet.com-master
