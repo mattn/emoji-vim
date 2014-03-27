@@ -27,9 +27,9 @@ function! s:enter(mode)
   let line = ':' . getline('.') . ':'
   bw!
   if a:mode == 'i'
-    call feedkeys("i" . line)
+    call feedkeys((col('.') == col('$') - 1 ? "a" : "i") . line)
   elseif a:mode == 'n'
-    call feedkeys("i" . line . "\<esc>")
+    call feedkeys((col('.') == col('$') - 1 ? "a" : "i") . line . "\<esc>")
   else
     let @+ = line
   endif
