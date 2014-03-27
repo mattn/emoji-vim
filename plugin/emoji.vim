@@ -31,7 +31,7 @@ endfunction
 
 function! s:emoji()
   silent new __EMOJI__
-  setlocal buftype=nofile
+  setlocal buftype=nofile bufhidden=wipe noswapfile buflisted cursorline
   redraw
   if len(s:emoji) == 0  
     call s:setup()
@@ -40,8 +40,8 @@ function! s:emoji()
   for n in range(len(s:emoji))
     execute ":sign place ".(n+1)." line=".(n+1)." name=".s:emoji[n]." buffer=" . bufnr("%")
   endfor
-  map <buffer> <cr> :call <sid>enter()<cr>
-  setlocal cursorline
+  nnoremap <buffer> <cr> :call <sid>enter()<cr>
+  nnoremap <buffer> q :bw!<cr>
 endfunction
 
 command! Emoji call s:emoji()
