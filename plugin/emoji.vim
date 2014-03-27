@@ -12,7 +12,7 @@ function! s:setup()
     if has('win32') || has('win64')
       call system(s:dir . '\download.bat')
     else
-      call system(s:dir . '/download.sh')
+      call system("sh " . s:dir . '/download.sh')
     endif
     let files = split(glob(s:dir . '/*' . s:ext), "\n")
   endif
@@ -37,7 +37,7 @@ endfunction
 
 function! s:emoji(mode)
   silent new __EMOJI__
-  setlocal buftype=nofile bufhidden=wipe noswapfile buflisted cursorline
+  setlocal buftype=nofile bufhidden=wipe noswapfile nonumber buflisted cursorline
   redraw
   if len(s:emoji) == 0  
     call s:setup()
