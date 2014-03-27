@@ -23,13 +23,19 @@ function! s:setup()
   endfor
 endfunction
 
-function! s:enter()
-  let line = getline('.')
-  let @+ = ':' . line . ':'
+function! s:enter(mode)
+  let line = ':' . getline('.') . ':'
   bw!
+  if a:mode == 'i'
+    call feedkeys("i" . line)
+  elseif a:mode == 'n'
+    call feedkeys("i" . line . "\<esc>")
+  else
+    let @+ = line
+  endif
 endfunction
 
-function! s:emoji()
+function! s:emoji(mode)
   silent new __EMOJI__
   setlocal buftype=nofile bufhidden=wipe noswapfile buflisted cursorline
   redraw
@@ -41,8 +47,17 @@ function! s:emoji()
     execute ":sign place ".(n+1)." line=".(n+1)." name=".s:emoji[n]." buffer=" . bufnr("%")
   endfor
   setlocal nomodifiable
-  nnoremap <silent> <buffer> <cr> :call <sid>enter()<cr>
+  exec "nnoremap <silent> <buffer> <cr> :call <sid>enter('".a:mode."')<cr>"
   nnoremap <silent> <buffer> q :bw!<cr>
+  if a:mode == 'i'
+    stopinsert
+  endif
+  return ''
 endfunction
 
-command! Emoji call s:emoji()
+nnoremap <plug>(emoji-selector-clipboard) :<c-u>call <sid>emoji('')<cr>
+inoremap <plug>(emoji-selector-clipboard) <c-r>=<sid>emoji('')<cr>
+nnoremap <plug>(emoji-selector-insert) :<c-u>call <sid>emoji('n')<cr>
+inoremap <plug>(emoji-selector-insert) <c-r>=<sid>emoji('i')<cr>
+
+command! Emoji call s:emoji('')
