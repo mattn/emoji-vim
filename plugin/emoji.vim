@@ -40,6 +40,7 @@ function! s:emoji()
   for n in range(len(s:emoji))
     execute ":sign place ".(n+1)." line=".(n+1)." name=".s:emoji[n]." buffer=" . bufnr("%")
   endfor
+  setlocal nomodifiable
   nnoremap <buffer> <cr> :call <sid>enter()<cr>
   nnoremap <buffer> q :bw!<cr>
 endfunction
