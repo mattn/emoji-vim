@@ -7,7 +7,14 @@ else
 endif
 
 function! s:setup()
+  let org_wildignore = &l:wildignore
+  if has('win32') || has('win64')
+    set wildignore-=*.bmp
+  else
+    set wildignore-=*.png
+  endif
   let files = split(glob(s:dir . '/*' . s:ext), "\n")
+  let &l:wildignore = org_wildignore
   if len(files) == 0
     if has('win32') || has('win64')
       call system(s:dir . '\download.bat')
@@ -39,7 +46,7 @@ function! s:emoji(mode)
   silent new __EMOJI__
   setlocal buftype=nofile bufhidden=wipe noswapfile nonumber buflisted cursorline
   redraw
-  if len(s:emoji) == 0  
+  if len(s:emoji) == 0
     call s:setup()
   endif
   call setline(1, s:emoji)
