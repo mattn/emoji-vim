@@ -1,3 +1,9 @@
+if exists('g:loaded_emoji')
+  finish
+endif
+let s:save_cpo = &cpo
+set cpo&vim
+
 let s:dir = expand("<sfile>:p:h:h") . '/emoji'
 let s:emoji = []
 if has('win32') || has('win64')
@@ -68,3 +74,8 @@ nnoremap <plug>(emoji-selector-insert) :<c-u>call <sid>emoji('n')<cr>
 inoremap <plug>(emoji-selector-insert) <c-r>=<sid>emoji('i')<cr>
 
 command! Emoji call s:emoji('')
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+let g:loaded_emoji = 1
