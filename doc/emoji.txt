@@ -14,7 +14,7 @@ Customize              |emoji-customize|
 
 ==============================================================================
 ==============================================================================
-INSTALLRATION                                                    *emoji-install*
+INSTALLATION                                                     *emoji-install*
 
 Install the distributed files into Vim runtime directory which is usually
 ~/.vim/, or $HOME/vimfiles on Windows.
